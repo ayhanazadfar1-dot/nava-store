@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>فروشگاه نوا | Nava Store</title>
+  <style>
+    :root{--bg:#0b1020;--panel:#141c31;--panel2:#1c2742;--text:#f4f7ff;--muted:#aab5d0;--accent:#7c5cff;--accent2:#24d6b5;--border:#2b3655;--danger:#ff657a}
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{margin:0;background:radial-gradient(circle at top right,#18234a 0,#0b1020 42%);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+    a{color:inherit;text-decoration:none}
+    button,input,textarea,select{font:inherit}
+    button{cursor:pointer;border:0}
+    .wrap{width:min(1120px,92%);margin:auto}
+    header{position:sticky;top:0;z-index:10;background:#0b1020eF;border-bottom:1px solid var(--border);backdrop-filter:blur(14px)}
+    .nav{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:14px 0;flex-wrap:wrap}
+    .brand{font-size:1.5rem;font-weight:900;letter-spacing:-1px}.brand span{color:var(--accent2)}
+    nav{display:flex;gap:8px;flex-wrap:wrap}
+    nav a{padding:7px 11px;border-radius:10px;color:var(--muted);font-size:.9rem}
+    nav a:hover{background:var(--panel2);color:white}
+    .cart-pill{background:var(--accent);padding:8px 13px;border-radius:12px;font-weight:bold}
+    .hero{padding:60px 0 36px;display:grid;grid-template-columns:1.3fr .7fr;gap:26px;align-items:center}
+    .eyebrow{color:var(--accent2);font-weight:bold}
+    h1{font-size:clamp(2rem,5vw,3.7rem);line-height:1.35;margin:10px 0}
+    .hero p,.muted{color:var(--muted)}
+    .hero-card{background:linear-gradient(145deg,#26345e,#171d37);border:1px solid #3b4772;border-radius:24px;padding:28px;min-height:230px;display:flex;flex-direction:column;justify-content:center}
+    .hero-card .emoji{font-size:4rem}
+    .btn{background:var(--accent);color:white;padding:10px 16px;border-radius:12px;font-weight:bold;display:inline-block}
+    .btn:hover{filter:brightness(1.12)}
+    .btn.secondary{background:var(--panel2);border:1px solid var(--border)}
+    .btn.green{background:#087f6a}
+    section{padding:32px 0;scroll-margin-top:100px}
+    .section-head{display:flex;align-items:end;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+    h2{font-size:1.7rem;margin:0}
+    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+    .card{background:var(--panel);border:1px solid var(--border);border-radius:18px;padding:18px}
+    .product-icon{height:125px;border-radius:14px;background:linear-gradient(135deg,#25335d,#1c2440);display:grid;place-items:center;font-size:3.2rem;margin-bottom:14px}
+    .card h3{margin:4px 0}
+    .price{font-size:1.15rem;font-weight:bold;color:var(--accent2);margin:8px 0 12px}
+    .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+    .field{width:100%;background:#0d1428;color:var(--text);border:1px solid var(--border);border-radius:11px;padding:11px 12px;outline:none}
+    .field:focus{border-color:var(--accent)}
+    .field-label{display:block;margin:10px 0 5px;color:var(--muted);font-size:.92rem}
+    .search{max-width:320px}
+    .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .cart-item{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid var(--border);padding:12px 0}
+    .qty button{background:var(--panel2);color:white;border:1px solid var(--border);border-radius:8px;width:30px;height:30px}
+    .total{font-size:1.35rem;font-weight:bold;margin:16px 0}
+    .notice{background:#2b2445;border:1px solid #59458e;padding:12px;border-radius:12px;color:#e7ddff}
+    .qr-area{display:grid;grid-template-columns:1fr 200px;gap:18px;align-items:center}
+    #qrResult{background:white;border-radius:12px;padding:10px;min-height:180px;display:grid;place-items:center;color:#222}
+    #qrResult img{max-width:100%;height:auto}
+    .empty{color:var(--muted);padding:12px 0}
+    footer{border-top:1px solid var(--border);margin-top:30px;padding:24px 0;color:var(--muted);text-align:center}
+    .small{font-size:.85rem;color:var(--muted)}
+    .hidden{display:none!important}
+    @media(max-width:760px){.hero{grid-template-columns:1fr;padding-top:35px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.two-col{grid-template-columns:1fr}.qr-area{grid-template-columns:1fr}#qrResult{max-width:220px}}
+    @media(max-width:480px){.grid{grid-template-columns:1fr}.nav{align-items:flex-start}.brand{width:100%}nav a{padding:6px 8px;font-size:.82rem}}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap nav">
+    <a class="brand" href="#home">NAVA<span>.</span></a>
+    <nav aria-label="منوی اصلی">
+      <a href="#products">محصولات</a>
+      <a href="#add-product">افزودن محصول</a>
+      <a href="#games">بازی‌ها</a>
+      <a href="#qr">ساخت QR</a>
+      <a href="#files">فایل‌ها</a>
+      <a href="#cart">سبد خرید</a>
+    </nav>
+    <a class="cart-pill" href="#cart">سبد خرید (<span id="cartCount">۰</span>)</a>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="home">
+    <div>
+      <div class="eyebrow">به دنیای نوا خوش آمدی</div>
+      <h1>خرید ساده،<br>تجربه‌ای متفاوت.</h1>
+      <p>محصولت را پیدا کن، به سبد خرید اضافه کن و سفارش آزمایشی‌ات را ثبت کن.</p>
+      <div class="row">
+        <a class="btn" href="#products">دیدن محصولات</a>
+        <a class="btn secondary" href="#qr">ساخت QR Code</a>
+      </div>
+    </div>
+    <div class="hero-card">
+      <div class="emoji">🛍️ ✨</div>
+      <h2>فروشگاه نوا</h2>
+      <p>یک فروشگاه کوچک با ابزارهای کاربردی در یک جا.</p>
+    </div>
+  </section>
+
+  <section id="products">
+    <div class="section-head">
+      <div><div class="eyebrow">انتخاب کن</div><h2>محصولات</h2></div>
+      <input id="searchInput" class="field search" type="search" placeholder="جست‌وجوی محصول..." aria-label="جست‌وجوی محصول">
+    </div>
+    <div id="productGrid" class="grid"></div>
+    <p id="noProducts" class="empty hidden">محصولی پیدا نشد.</p>
+  </section>
+
+  <section id="add-product">
+    <div class="section-head"><div><div class="eyebrow">مدیریت فروشگاه</div><h2>افزودن محصول</h2></div></div>
+    <div class="card">
+      <p class="muted">محصول جدید به همین صفحه اضافه می‌شود. این نسخه اطلاعات را فقط در همین صفحه نگه می‌دارد و با تازه‌سازی ممکن است پاک شود.</p>
+      <form id="addProductForm">
+        <div class="two-col">
+          <div><label class="field-label" for="newName">نام محصول</label><input class="field" id="newName" required maxlength="60" placeholder="مثلاً هدفون"></div>
+          <div><label class="field-label" for="newPrice">قیمت (تومان)</label><input class="field" id="newPrice" required type="number" min="1" step="1" placeholder="مثلاً 250000"></div>
+          <div><label class="field-label" for="newIcon">ایموجی محصول</label><input class="field" id="newIcon" maxlength="8" placeholder="🎧"></div>
+          <div><label class="field-label" for="newDescription">توضیح کوتاه</label><input class="field" id="newDescription" maxlength="120" placeholder="توضیح محصول"></div>
+        </div>
+        <p><button class="btn" type="submit">افزودن محصول</button></p>
+      </form>
+    </div>
+  </section>
+
+  <section id="cart">
+    <div class="section-head"><div><div class="eyebrow">سفارش تو</div><h2>سبد خرید</h2></div></div>
+    <div class="two-col">
+      <div class="card">
+        <div id="cartItems"><p class="empty">سبد خرید خالی است.</p></div>
+        <div class="total">مبلغ کل: <span id="cartTotal">۰ تومان</span></div>
+        <button class="btn secondary" id="clearCart" type="button">خالی کردن سبد</button>
+      </div>
+      <div class="card">
+        <h3>ثبت سفارش آزمایشی</h3>
+        <label class="field-label" for="customerName">نام مشتری</label>
+        <input id="customerName" class="field" maxlength="80" placeholder="نام شما">
+        <label class="field-label" for="customerPhone">شماره تماس (اختیاری)</label>
+        <input id="customerPhone" class="field" type="tel" maxlength="30" placeholder="شماره تماس">
+        <label class="field-label" for="customerAddress">نشانی (اختیاری)</label>
+        <textarea id="customerAddress" class="field" rows="3" maxlength="300" placeholder="نشانی تحویل"></textarea>
+        <p><button id="checkoutBtn" class="btn green" type="button">ثبت سفارش آزمایشی</button></p>
+        <div id="orderMessage" aria-live="polite"></div>
+        <p class="small">این دکمه پول دریافت نمی‌کند و سفارش را به سرور نمی‌فرستد؛ فقط یک رسید آزمایشی در همین صفحه نشان می‌دهد.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="games">
+    <div class="section-head"><div><div class="eyebrow">کمی سرگرمی</div><h2>بازی‌ها</h2></div></div>
+    <div class="grid">
+      <div class="card"><div class="product-icon">🎯</div><h3>حدس عدد</h3><p class="muted">یک عدد بین ۱ تا ۵ انتخاب کن.</p><div class="row"><select id="guess" class="field" style="max-width:120px"><option value="1">۱</option><option value="2">۲</option><option value="3">۳</option><option value="4">۴</option><option value="5">۵</option></select><button id="guessBtn" class="btn" type="button">حدس بزن</button></div><p id="guessResult" aria-live="polite"></p></div>
+      <div class="card"><div class="product-icon">🪙</div><h3>شیر یا خط</h3><p class="muted">روی دکمه بزن و نتیجه را ببین.</p><button id="coinBtn" class="btn" type="button">انداختن سکه</button><p id="coinResult" aria-live="polite"></p></div>
+      <div class="card"><div class="product-icon">🧠</div><h3>بازی‌های بیشتر</h3><p class="muted">بعداً می‌توانیم بازی‌های بیشتری به نوا اضافه کنیم.</p></div>
+    </div>
+  </section>
+
+  <section id="qr">
+    <div class="section-head"><div><div class="eyebrow">ابزار کاربردی</div><h2>ساخت QR Code</h2></div></div>
+    <div class="card qr-area">
+      <div>
+        <label class="field-label" for="qrLink">لینک موردنظر را وارد کن</label>
+        <input id="qrLink" class="field" type="url" placeholder="https://example.com">
+        <div class="row" style="margin-top:12px"><button id="makeQrBtn" class="btn" type="button">ساخت QR</button><button id="addQrToCartBtn" class="btn green" type="button" disabled>افزودن QR به سبد خرید — ۷۰۰٬۰۰۰ تومان</button></div>
+        <p id="qrMessage" class="small" aria-live="polite">قیمت هر QR Code: ۷۰۰٬۰۰۰ تومان. برای ساخت QR به اتصال اینترنت نیاز است.</p>
+      </div>
+      <div id="qrResult">QR Code اینجا نمایش داده می‌شود.</div>
+    </div>
+  </section>
+
+  <section id="files">
+    <div class="section-head"><div><div class="eyebrow">فایل‌های تو</div><h2>فایل‌ها</h2></div></div>
+    <div class="card">
+      <p class="muted">فایل‌های خودت را انتخاب کن تا نامشان در این قسمت نمایش داده شود. این نسخه فایل‌ها را روی سایت آپلود نمی‌کند.</p>
+      <label class="field-label" for="filePicker">انتخاب فایل از دستگاه</label>
+      <input id="filePicker" class="field" type="file" multiple>
+      <ul id="fileList"><li class="small">هنوز فایلی انتخاب نشده است.</li></ul>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap">© <span id="year"></span> فروشگاه نوا — ساخته‌شده با HTML، CSS و JavaScript</div></footer>
+
+<script>
+  const products = [
+    {id:1,name:"هدفون نوا",price:450000,icon:"🎧",description:"هدفون برای گوش دادن به موسیقی"},
+    {id:2,name:"ساعت هوشمند",price:780000,icon:"⌚",description:"ساعت با طراحی مدرن"},
+    {id:3,name:"دسته بازی",price:620000,icon:"🎮",description:"برای تجربه بهتر بازی‌ها"},
+    {id:4,name:"بلندگو",price:350000,icon:"🔊",description:"صدای دلنشین در خانه"}
+  ];
+  const cart = new Map();
+  const money = n => new Intl.NumberFormat("fa-IR").format(n) + " تومان";
+  const byId = id => document.getElementById(id);
+  const safe = value => String(value).replace(/[&<>"']/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+
+  function renderProducts(){
+    const term = byId("searchInput").value.trim().toLocaleLowerCase("fa");
+    const filtered = products.filter(p => (p.name+" "+p.description).toLocaleLowerCase("fa").includes(term));
+    byId("productGrid").innerHTML = filtered.map(p => `
+      <article class="card">
+        <div class="product-icon">${safe(p.icon || "📦")}</div>
+        <h3>${safe(p.name)}</h3><p class="muted">${safe(p.description || "محصول فروشگاه نوا")}</p>
+        <div class="price">${money(p.price)}</div>
+        <button class="btn add-to-cart" data-id="${p.id}" type="button">افزودن به سبد</button>
+      </article>`).join("");
+    byId("noProducts").classList.toggle("hidden", filtered.length !== 0);
+  }
+  function renderCart(){
+    let count = 0, total = 0;
+    const items = [...cart.entries()].map(([id,qty]) => {
+      const p = products.find(item => item.id === id);
+      if(!p) return "";
+      count += qty; total += p.price * qty;
+      return `<div class="cart-item"><div><strong>${safe(p.name)}</strong><div class="small">${money(p.price)} × ${qty}</div></div>
+        <div class="row qty"><button data-action="minus" data-id="${id}" aria-label="کم کردن تعداد">−</button><span>${qty}</span><button data-action="plus" data-id="${id}" aria-label="زیاد کردن تعداد">+</button><button data-action="remove" data-id="${id}" aria-label="حذف محصول">×</button></div></div>`;
+    }).join("");
+    byId("cartItems").innerHTML = items || '<p class="empty">سبد خرید خالی است.</p>';
+    byId("cartCount").textContent = new Intl.NumberFormat("fa-IR").format(count);
+    byId("cartTotal").textContent = money(total);
+    byId("checkoutBtn").disabled = count === 0;
+    byId("checkoutBtn").style.opacity = count === 0 ? ".55" : "1";
+  }
+  byId("productGrid").addEventListener("click", e => {
+    const btn = e.target.closest(".add-to-cart");
+    if(!btn) return;
+    const id = Number(btn.dataset.id);
+    cart.set(id, (cart.get(id) || 0) + 1);
+    renderCart();
+    btn.textContent = "اضافه شد ✓";
+    setTimeout(() => { if(btn.isConnected) btn.textContent = "افزودن به سبد"; }, 900);
+  });
+  byId("cartItems").addEventListener("click", e => {
+    const btn = e.target.closest("button[data-action]");
+    if(!btn) return;
+    const id = Number(btn.dataset.id), action = btn.dataset.action, qty = cart.get(id) || 0;
+    if(action === "plus") cart.set(id, qty + 1);
+    if(action === "minus"){ if(qty <= 1) cart.delete(id); else cart.set(id, qty - 1); }
+    if(action === "remove") cart.delete(id);
+    renderCart();
+  });
+  byId("clearCart").addEventListener("click", () => { cart.clear(); renderCart(); byId("orderMessage").textContent = ""; });
+  byId("searchInput").addEventListener("input", renderProducts);
+  byId("addProductForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const name = byId("newName").value.trim(), price = Number(byId("newPrice").value);
+    if(!name || !Number.isFinite(price) || price <= 0){ alert("نام و قیمت معتبر وارد کن."); return; }
+    products.unshift({id:Math.max(0,...products.map(p=>p.id))+1,name,price,icon:byId("newIcon").value.trim()||"📦",description:byId("newDescription").value.trim()||"محصول جدید"});
+    e.target.reset(); renderProducts();
+    byId("products").scrollIntoView({behavior:"smooth"});
+  });
+  byId("checkoutBtn").addEventListener("click", () => {
+    if(cart.size === 0) return;
+    const name = byId("customerName").value.trim();
+    if(!name){ byId("orderMessage").innerHTML = '<p class="notice">لطفاً نام مشتری را وارد کن.</p>'; byId("customerName").focus(); return; }
+    const total = [...cart.entries()].reduce((sum,[id,qty]) => sum + (products.find(p=>p.id===id)?.price || 0)*qty,0);
+    const orderNo = "NAVA-" + Math.random().toString(36).slice(2,8).toUpperCase();
+    byId("orderMessage").innerHTML = `<div class="notice"><strong>سفارش آزمایشی ثبت شد!</strong><br>شماره سفارش: ${orderNo}<br>نام: ${safe(name)}<br>مبلغ: ${money(total)}<br>پرداخت واقعی انجام نشده است.</div>`;
+  });
+  byId("guessBtn").addEventListener("click", () => {
+    const answer = Math.floor(Math.random()*5)+1;
+    const guess = Number(byId("guess").value);
+    byId("guessResult").textContent = guess === answer ? "آفرین! درست حدس زدی 🎉" : `این بار عدد ${new Intl.NumberFormat("fa-IR").format(answer)} بود. دوباره تلاش کن!`;
+  });
+  byId("coinBtn").addEventListener("click", () => { byId("coinResult").textContent = Math.random()<.5 ? "🦁 شیر!" : "🪙 خط!"; });
+  let qrImageUrl = "";
+  let currentQrLink = "";
+  let currentQrReady = false;
+  const QR_PRICE = 700000;
+  byId("makeQrBtn").addEventListener("click", () => {
+    const link = byId("qrLink").value.trim();
+    let parsed;
+    try { parsed = new URL(link); } catch { byId("qrMessage").textContent = "لطفاً یک لینک معتبر با https:// وارد کن."; return; }
+    if(!["http:","https:"].includes(parsed.protocol)){ byId("qrMessage").textContent = "فقط لینک‌های http یا https مجاز هستند."; return; }
+    qrImageUrl = "https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=" + encodeURIComponent(link);
+    currentQrLink = link;
+    currentQrReady = false;
+    byId("addQrToCartBtn").disabled = true;
+    byId("qrResult").innerHTML = "";
+    const img = new Image();
+    img.alt = "QR Code لینک واردشده";
+    img.onload = () => {
+      byId("qrResult").replaceChildren(img);
+      byId("qrMessage").textContent = "QR Code ساخته شد. برای اضافه کردن آن به سفارش، دکمهٔ سبز را بزن.";
+      currentQrReady = true;
+      byId("addQrToCartBtn").disabled = false;
+    };
+    img.onerror = () => {
+      byId("qrResult").textContent = "ساخت QR انجام نشد؛ اتصال اینترنت را بررسی کن.";
+      byId("qrMessage").textContent = "سرویس QR در دسترس نیست.";
+      currentQrReady = false;
+      byId("addQrToCartBtn").disabled = true;
+    };
+    img.src = qrImageUrl;
+  });
+  byId("addQrToCartBtn").addEventListener("click", () => {
+    if(!currentQrReady || !currentQrLink) return;
+    const existing = products.find(p => p.qrLink === currentQrLink);
+    let qrProduct;
+    if(existing) {
+      qrProduct = existing;
+    } else {
+      qrProduct = {
+        id: 900000 + products.filter(p => p.qrLink).length + 1,
+        name: "QR Code سفارشی",
+        price: QR_PRICE,
+        icon: "▦",
+        description: "QR برای لینک: " + currentQrLink,
+        qrLink: currentQrLink
+      };
+      products.push(qrProduct);
+    }
+    cart.set(qrProduct.id, (cart.get(qrProduct.id) || 0) + 1);
+    renderCart();
+    byId("qrMessage").textContent = "QR Code با قیمت ۷۰۰٬۰۰۰ تومان به سبد خرید اضافه شد.";
+    byId("cart").scrollIntoView({behavior:"smooth"});
+  });
+  byId("filePicker").addEventListener("change", e => {
+    const files = [...e.target.files];
+    byId("fileList").innerHTML = files.length ? files.map(f => `<li>${safe(f.name)} <span class="small">(${(f.size/1024).toFixed(1)} KB)</span></li>`).join("") : '<li class="small">هنوز فایلی انتخاب نشده است.</li>';
+  });
+  byId("year").textContent = new Date().getFullYear();
+  renderProducts(); renderCart();
+</script>
+</body>
+</html>
